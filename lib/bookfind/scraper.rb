@@ -5,34 +5,37 @@ require "rake"
 
 class Scraper
   
-  @@all = []
+  def self.getinfofic
+    booklist = Nokogiri::HTML(open("https://www.amazon.com/Best-Sellers-Books-Literature-Fiction/zgbs/books/17/ref=zg_bs_nav_b_1_b"))
+    booklist.css(".zg-item-immersion").each do |info|
+      info.text.tr("\n","")
+    end
+  end
+
   
-  def self.getinfo
+  def self.getinfomys
+    booklist = Nokogiri::HTML(open("hhttps://www.amazon.com/Best-Sellers-Books-Mystery-Thriller-Suspense/zgbs/books/18/ref=zg_bs_nav_b_1_b"))
+    booklist.css(".zg-item-immersion").each do |info|
+      info.text.tr("\n","")
+    end
+  end
+  
+  
+  def self.getinforoman
+    booklist = Nokogiri::HTML(open("https://www.amazon.com/Best-Sellers-Books-Romance/zgbs/books/23/ref=zg_bs_nav_b_1_b"))
+    booklist.css(".zg-item-immersion").each do |info|
+      info.text.tr("\n","")
+    end
+  end
+  
     
-    booklist = Nokogiri::HTML(open("https://www.amazon.com/best-sellers-books-Amazon/zgbs/books/ref=zg_bs_unv_b_1_10134_2/136-1904286-8361318"))
-    booklist.css("div.a-fixed-left-grid-inner ul ul li").each do |genre|
-      genre.text.tr("\n","")
+  def self.getinfoscifi
+    allscifi = []
+    booklist = Nokogiri::HTML(open("https://www.amazon.com/Best-Sellers-Books-Science-Fiction-Fantasy/zgbs/books/25/ref=zg_bs_nav_b_1_b"))
+    booklist.css(".zg-item-immersion").each do |info| 
+      title  = info.css(".a-link-normal div").text.tr("\n", " ").strip
+      author = info.css(".a-row a-size-small").text.tr("\n", " ").strip
       binding.pry
     end
-
-
   end
 end
-  
-#   def self.getgen
-#     allgen = []
-#     booklist.css(".zg_browseRoot"). each do |gen| allgen << gen.text.tr("\n\t", "")
-#       binding.pry
-#     end
-#   end
-# end
-  
-  # def getgenre
-  #   self.getinfo.css("h2")
-  # end
-  
-  # def makegenre
-  #   getgenre.each do |gen|
-  #     binding.pry 
-  #   end
-  # end
