@@ -35,6 +35,9 @@ class Scraper
     booklist.css(".zg-item-immersion").each do |info| 
       title  = info.css(".a-link-normal div").text.tr("\n", " ").strip
       author = info.css(".a-row a-size-small").text.tr("\n", " ").strip
+      urlbase = info.css("a.a-link-normal").attribute("href") # will need to prepend www.amazon.com
+      
+      
       binding.pry
     end
   end
