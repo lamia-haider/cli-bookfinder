@@ -37,7 +37,7 @@ class Scraper
       author = info.css(".a-size-small span.a-color-base").text.tr("\n", " ").strip
       urlbase = info.css("a.a-link-normal").attribute("href") # will need to prepend www.amazon.com
       url = "www.amazon.com" + urlbase.to_s
-      Books.new(title, author, url)
+      Bookfind::Books.new(title, author)
       binding.pry
     end
   end
