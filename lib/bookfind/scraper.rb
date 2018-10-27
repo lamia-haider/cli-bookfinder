@@ -2,8 +2,12 @@ require "nokogiri"
 require "pry"
 require "open-uri"
 require "rake"
+require 'mechanize'
+
 
 class Scraper
+  
+  agent = Mechanize.new
   
   def self.getinfofic
     booklist = Nokogiri::HTML(open("https://www.amazon.com/Best-Sellers-Books-Literature-Fiction/zgbs/books/17/ref=zg_bs_nav_b_1_b"))
@@ -22,9 +26,8 @@ class Scraper
   
   
   def self.getinforoman
-    booklist = Nokogiri::HTML(open("https://www.amazon.com/Best-Sellers-Books-Romance/zgbs/books/23/ref=zg_bs_nav_b_1_b"))
-    booklist.css(".zg-item-immersion").each do |info|
-      info.text.tr("\n","")
+    booklist = agent.get "https://www.amazon.com/Norse-Mythology-Neil-Gaiman-ebook/dp/B01HQA6EOC"
+    binding.pry
     end
   end
   
@@ -35,11 +38,10 @@ class Scraper
     booklist.css(".zg-item-immersion").each do |info| 
       title  = info.css(".a-link-normal div").text.tr("\n", " ").strip
       author = info.css(".a-size-small span.a-color-base").text.tr("\n", " ").strip
-      urlbase = info.css("a.a-link-normal").attribute("href") # will need to prepend www.amazon.com
-      url = "www.amazon.com" + urlbase.to_s
-      Bookfind::Books.new(title, author)
-      binding.pry
-    end
+      urlbase = info.css("a.a-link-normal").attribute("href").text
+      url = "http://www.amazon.com" + urlbase.to_s
+      url1 = url.split("?")[0]
+    #  Bookfind::Books.new(title, author)
   end
 end
     # doc ||= Nokogiri::HTML(open(self.url))

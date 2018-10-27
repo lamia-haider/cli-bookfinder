@@ -25,5 +25,5 @@ class Bookfind::Books
   def summary
     @summary = indivpg.css(".bookDescription_feature_div")
   end
-  binding.pry
+ 
 end
