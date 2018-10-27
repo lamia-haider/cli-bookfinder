@@ -2,12 +2,10 @@ require "nokogiri"
 require "pry"
 require "open-uri"
 require "rake"
-require 'mechanize'
 
 
 class Scraper
   
-  agent = Mechanize.new
   
   def self.getinfofic
     booklist = Nokogiri::HTML(open("https://www.amazon.com/Best-Sellers-Books-Literature-Fiction/zgbs/books/17/ref=zg_bs_nav_b_1_b"))
@@ -26,11 +24,19 @@ class Scraper
   
   
   def self.getinforoman
-    booklist = agent.get "https://www.amazon.com/Norse-Mythology-Neil-Gaiman-ebook/dp/B01HQA6EOC"
-    binding.pry
+    booklist = Nokogiri::HTML(open("https://www.goodreads.com/list/show/3.Best_Science_Fiction_Fantasy_Books"))
+    booklist.css("tr td").each do |book|
+      @title = book.css("a.bookTitle").text
+      @author = book.css("a.authorName span").text
+      @grrating = book.css("span.minirating").text
+      @link= book.css("a.bookTitle").attribute("href").text
     end
-  end
+    binding.pry
   
+    
+  end
+
+
     
   def self.getinfoscifi
     allscifi = []
@@ -44,7 +50,4 @@ class Scraper
     #  Bookfind::Books.new(title, author)
   end
 end
-    # doc ||= Nokogiri::HTML(open(self.url))
-    # date = doc.xpath(//*[@id="productDetailsTable"]/tbody/tr/td/div/ul/li[4]/text()).text
-    # binding.pry 
-
+end
