@@ -24,14 +24,15 @@ class Scraper
   
   
   def self.getinforoman
-    booklist = Nokogiri::HTML(open("https://www.goodreads.com/list/show/3.Best_Science_Fiction_Fantasy_Books"))
-    booklist.css("tr td").each do |book|
-      @title = book.css("a.bookTitle").text
-      @author = book.css("a.authorName span").text
-      @grrating = book.css("span.minirating").text
-      @link= book.css("a.bookTitle").attribute("href").text
+    booklist = Nokogiri::HTML(open("hhttps://en.wikipedia.org/wiki/List_of_science_fiction_novels"))
+    booklist.css(".mw-parser-output ul li").each do |book|
+      @title = book.css(".mw-parser-output ul li i").text
+      # @author = book.css("a.authorName span").text
+      # @grrating = book.css("span.minirating").text
+      # @link= book.css("a.bookTitle")
+      binding.pry
     end
-    binding.pry
+ 
   
     
   end
