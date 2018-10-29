@@ -22,11 +22,14 @@ class Scraper
     end
   end
   
-  
+  @@all = []
   def self.getinforoman
-    booklist = Nokogiri::HTML(open("hhttps://en.wikipedia.org/wiki/List_of_science_fiction_novels"))
+    booklist = Nokogiri::HTML(open("https://en.wikipedia.org/wiki/List_of_science_fiction_novels"))
     booklist.css(".mw-parser-output ul li").each do |book|
-      @title = book.css(".mw-parser-output ul li i").text
+      titleau = book.text.split("by")
+      @title = titleau[0]
+      @author = titleau[1]
+    
       # @author = book.css("a.authorName span").text
       # @grrating = book.css("span.minirating").text
       # @link= book.css("a.bookTitle")
