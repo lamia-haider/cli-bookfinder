@@ -29,6 +29,8 @@ class Scraper
       titleau = book.text.split("by")
       @title = titleau[0]
       @author = titleau[1]
+      @urlbase = book.css("a").attribute("href").text
+      @url = "https://en.wikipedia.org" + @urlbase
     
       # @author = book.css("a.authorName span").text
       # @grrating = book.css("span.minirating").text
