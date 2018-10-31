@@ -10,7 +10,7 @@ class Bookfind::Books
     self.new(title, url, author)
   end
   
-  def initialize(title, url, author)
+  def initialize(title, author)
     @title = title
     @url = url
     @author = author
