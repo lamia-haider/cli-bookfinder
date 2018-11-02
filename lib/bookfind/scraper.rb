@@ -9,7 +9,7 @@ class Bookfind::Scraper
   
   def self.getinforoman
     booklist = Nokogiri::HTML(open("https://en.wikipedia.org/wiki/List_of_science_fiction_novels"))
-    booklist.css(".mw-parser-output ul li").delete_if do |book| book.include?(\d\)
+    booklist.css(".mw-parser-output ul li").each do |book| 
       titleau = book.text.split("by")
       @title = titleau[0]
       @author = titleau[1]
@@ -18,10 +18,12 @@ class Bookfind::Scraper
       title = @title
       author = @author
       url = @url
+      pubdate = @page.at('tr:contains("Publication date")').text.strip
+   binding.pry
+    end
  
 
-    end
-    Bookfind::Books.new(title, author)
+   # Bookfind::Books.new(title, author)
   end
   
   def getpage
