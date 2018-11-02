@@ -19,6 +19,7 @@ class Bookfind::Scraper
       author = @author
       url = @url
       pubdate = @page.at('tr:contains("Publication date")').text.strip
+      @page.css("tr td")[8].text.strip
    binding.pry
     end
  
