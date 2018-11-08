@@ -1,5 +1,5 @@
 class Bookfind::Books
-  attr_accessor :title, :author, :date, :url, :summary, :pagenum, :genre
+  attr_accessor :title, :author, :date, :url, :summary, :pagenum
   @@all = []
   
   def self.getpage(booklist)
@@ -38,9 +38,6 @@ class Bookfind::Books
     @page.css("tr td")[9].text.strip
   end
   
-  def genre 
-    @genre = @page.css("tr td")[5].text.strip
-  end
   
   def summary
     @summary = @page.css("div.mw-parser-output p").text
