@@ -1,5 +1,5 @@
 class Bookfind::Books
-  attr_accessor :title, :author, :date, :url, :summary, :pagenum
+  attr_accessor :title, :author, :date, :url, :summary
   @@all = []
   
   def self.getpage(booklist)
@@ -25,19 +25,27 @@ class Bookfind::Books
     @@all
   end
   
+
+  
+  def shortlist
+    @@short = self.all.delete_if {|short| short.pagenum > 350}
+  
+  end
+  
   
   def getbook
     @page = Nokogiri::HTML(open(url))
   end
   
   def date
-    @date = @page.css("tr td")[7].text.strip
+    pdate = @page.css("tr td")[6].text
+    if pdate =~ /[1850-2050]/
+      @date = pdate
+      
+    end
   end
   
-  def pagenum
-    @page.css("tr td")[9].text.strip
-  end
-  
+
   
   def summary
     @summary = @page.css("div.mw-parser-output p").text
