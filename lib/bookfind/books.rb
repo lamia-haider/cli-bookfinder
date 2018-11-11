@@ -2,16 +2,13 @@ class Bookfind::Books
   attr_accessor :title, :author, :date, :url, :summary
   @@all = []
   
-  def self.getpage(booklist)
-    booklist.css(".mw-parser-output ul li").each do |book| 
-      titleau = book.text.split("by")
-      title = titleau[0].strip
-      author = titleau[1]
-      urlbase = book.at_css("a").attribute("href") 
-      url = "https://en.wikipedia.org/" + urlbase.text
-      self.new(title, author, url)
-      binding.pry
-    end
+  def self.getpage(book)
+    titleau = book.text.split("by")
+    title = titleau[0].strip
+    author = titleau[1]
+    url = book.css("head link.canonical").text
+    #url = "https://en.wikipedia.org/#{book.css("a").attribute("href").text}"
+    self.new(title, author, url)
   end
   
   def initialize(title=nil, author=nil, url=nil)
@@ -25,25 +22,24 @@ class Bookfind::Books
     @@all
   end
   
-
-  
-  def shortlist
-    @@short = self.all.delete_if {|short| short.pagenum > 350}
-  
-  end
-  
   
   def getbook
-    @page = Nokogiri::HTML(open(url))
+    @page = Nokogiri::HTML(open(self.url))
   end
   
   def date
     pdate = @page.css("tr td")[6].text
+    qdate = @page.css("tr td")[7]
     if pdate =~ /[1850-2050]/
       @date = pdate
-      
+    elsif qdate =~ /[1850-2050]/
+    @date = pdate
+  else puts "Unavailable"
     end
   end
+
+
+   
   
 
   

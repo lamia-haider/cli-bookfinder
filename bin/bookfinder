@@ -3,4 +3,4 @@
 require_relative '../lib/bookfind'
 
 
-Bookfind::Scraper.getinforoman
+Bookfind::CLI.new.call
