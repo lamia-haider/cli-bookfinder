@@ -16,7 +16,7 @@ class Bookfind::CLI
   def start
     puts "I suggest the following."
     bookcl = Bookfind::Books.all.sample
-    puts "Why not try #{bookcl.title}."
+    puts "Why not try '#{bookcl.title}.'"
     puts "Interested? If you want more information type 'yes'. If you want a different recommendation type 'no'. Type 'exit' if you have decided that reading is too hard."
     input = gets.strip
     if input == "yes"
