@@ -2,6 +2,10 @@ class Bookfind::Books
   attr_accessor :title, :author, :date, :url, :summary
   @@all = []
   
+  
+  
+  # To-do: Exclude any books without the table.infobox.
+  
   def self.getpage(book)
     titleau = book.text.split("by")
     title = titleau[0].strip
@@ -10,7 +14,7 @@ class Bookfind::Books
     url = "https://en.wikipedia.org/wiki/#{title.gsub(" ", "_")}"
     self.new(title, author, url)
     
- binding.pry
+ #binding.pry
   end
   
   def initialize(title=nil, author=nil, url=nil)
@@ -31,20 +35,24 @@ class Bookfind::Books
   
   def date
     getbook
-    odate = @page.css("tr td")[5]
-    pdate = @page.css("tr td")[6]
-    qdate = @page.css("tr td")[7]
-    rdate = @page.css("tr td")[8]
-    if odate =~ /[1850-2050]/
-      @date = odate.text
-      elsif pdate =~ /[1850-2050]/
-      @date = pdate.text
-      elsif qdate =~ /[1850-2050]/
-      @date = qdate.text
-      elsif rdate =~ /[1850-2050]/
-      @date = rdate.text
-    end
+    fdate = @page.css('table.infobox tr td').detect{ |e| e.text =~ /\d{4}/ }
+    @date = fdate.text
+    @date
+    # odate = @page.css("tr td")[5]
+    # pdate = @page.css("tr td")[6]
+    # qdate = @page.css("tr td")[7]
+    # rdate = @page.css("tr td")[8]
+    # if odate =~ /[1850-2050]/
+    #   @date = odate.text
+    #   elsif pdate =~ /[1850-2050]/
+    #   @date = pdate.text
+    #   elsif qdate =~ /[1850-2050]/
+    #   @date = qdate.text
+    #   elsif rdate =~ /[1850-2050]/
+    #   @date = rdate.text
+    # # end            
   end
+
   
   def summary
     getbook
