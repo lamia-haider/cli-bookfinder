@@ -7,16 +7,8 @@ class Bookfind::CLI
     if input == "yes"
       start 
       elsif input == "no" 
-      puts "I see. Please come back when you are feeling more literate.".blue
-      else puts "I do not understand, please be more intelligible. Would you like a book suggestion? Type 'yes' or 'no'.".blue
-        input = gets.strip
-        if input == "yes"
-          start 
-          else 
-            exit
-          end
-        end
-      end
+        puts "I see. Please come back when you are feeling more literate".blue
+      else exit
     end
   end
   
