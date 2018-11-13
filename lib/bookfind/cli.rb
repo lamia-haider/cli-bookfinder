@@ -21,6 +21,7 @@ class Bookfind::CLI
     input = gets.strip
     if input == "yes"
       puts "Author: #{bookcl.author}"
+      puts "Website for more Information: #{bookcl.url}"
       puts "Synopsis: #{bookcl.summary}"
       puts "Date Published: #{bookcl.date}"
       puts "Website for more Information: #{bookcl.url}"

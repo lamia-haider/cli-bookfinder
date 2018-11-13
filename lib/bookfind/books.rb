@@ -6,10 +6,12 @@ class Bookfind::Books
     titleau = book.text.split("by")
     title = titleau[0].strip
     author = titleau[1]
-    url = "https://en.wikipedia.org/#{book.css("i a")[0]["href"]}"
+    #ubase = book.css("i a")#[0]["href"]
+    url = "https://en.wikipedia.org/#{title}"
    # url = book.css("head link.canonical").text
  #   url = "https://en.wikipedia.org/#{book.css("div.left-navigation div ul li span a").text}"
     self.new(title, author, url)
+ #binding.pry
   end
   
   def initialize(title=nil, author=nil, url=nil)

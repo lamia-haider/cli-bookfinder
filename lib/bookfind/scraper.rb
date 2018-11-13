@@ -14,7 +14,6 @@ class Bookfind::Scraper
         @@all<< book.text
         Bookfind::Books.getpage(book)
       end
-      binding.pry
     end
   end
   
