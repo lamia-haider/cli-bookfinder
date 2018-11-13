@@ -10,7 +10,11 @@ class Bookfind::Scraper
   def self.getinfo
     booklist = Nokogiri::HTML(open("https://en.wikipedia.org/wiki/List_of_science_fiction_novels"))
     booklist.css(".mw-parser-output ul li").each do |book| 
-      Bookfind::Books.getpage(book)
+      if book.text.include?("by")
+        @@all<< book.text
+        Bookfind::Books.getpage(book)
+      end
+      binding.pry
     end
   end
   

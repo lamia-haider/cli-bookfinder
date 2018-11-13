@@ -10,7 +10,6 @@ class Bookfind::Books
    # url = book.css("head link.canonical").text
  #   url = "https://en.wikipedia.org/#{book.css("div.left-navigation div ul li span a").text}"
     self.new(title, author, url)
-    binding.pry
   end
   
   def initialize(title=nil, author=nil, url=nil)
@@ -43,11 +42,9 @@ class Bookfind::Books
       elsif rdate =~ /[1850-2050]/
       @date = rdate
       else puts "Unavailable"
-        end
-      end
     end
   end
-
+  
   def summary
     @summary = @page.css("div.mw-parser-output p").text
   end
