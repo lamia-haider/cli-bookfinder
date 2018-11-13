@@ -7,11 +7,10 @@ class Bookfind::Books
     title = titleau[0].strip
     author = titleau[1]
     #ubase = book.css("i a")#[0]["href"]
-    url = "https://en.wikipedia.org/#{title}"
-   # url = book.css("head link.canonical").text
- #   url = "https://en.wikipedia.org/#{book.css("div.left-navigation div ul li span a").text}"
+    url = "https://en.wikipedia.org/wiki/#{title.gsub(" ", "_")}"
     self.new(title, author, url)
- #binding.pry
+    
+ binding.pry
   end
   
   def initialize(title=nil, author=nil, url=nil)
@@ -27,28 +26,29 @@ class Bookfind::Books
   
   
   def getbook
-    @page = Nokogiri::HTML(open(self.url))
+    @page = Nokogiri::HTML(open(url))
   end
   
   def date
-    odate.text = @page.css("tr td")[5]
+    getbook
+    odate = @page.css("tr td")[5]
     pdate = @page.css("tr td")[6]
     qdate = @page.css("tr td")[7]
-    qdate = @page.css("tr td")[8]
+    rdate = @page.css("tr td")[8]
     if odate =~ /[1850-2050]/
       @date = odate.text
       elsif pdate =~ /[1850-2050]/
-      @date = pdate
+      @date = pdate.text
       elsif qdate =~ /[1850-2050]/
-      @date = qdate
+      @date = qdate.text
       elsif rdate =~ /[1850-2050]/
-      @date = rdate
-      else puts "Unavailable"
+      @date = rdate.text
     end
   end
   
   def summary
-    @summary = @page.css("div.mw-parser-output p").text
+    getbook
+    @summary ||= @page.css("div.mw-parser-output p").text
   end
 end
 
