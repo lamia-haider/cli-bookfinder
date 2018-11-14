@@ -14,27 +14,29 @@ class Bookfind::Books
     titleau = book.text.split("by")
     title = titleau[0].strip
     author = titleau[1]
+    @url_str = "https://en.wikipedia.org/wiki/#{title.gsub(" ", "_")}"
+    checkurl
+    urlin
     #ubase = book.css("i a")#[0]["href"]
-    if url != "invalid"
+    if urlin != "invalid" && book.at('tr:contains("Publication")')
+      url = @url
       self.new(title, author, url)
-      binding.pry
-      end
     end
+   binding.pry
   end
   
-  def url_str
-    url_str = "https://en.wikipedia.org/wiki/#{title.gsub(" ", "_")}"
-  end
   
-  def checkurl(url_str)
-    url = URI.parse(url_str) rescue false
+  def self.checkurl
+    url = URI.parse(@url_str) rescue false
     url.kind_of?(URI::HTTP) || url.kind_of?(URI::HTTPS)
   end
   
-  def url
-    if checkurl == "true"
-      url = url_str
+  def self.urlin
+    if checkurl == true
+      @url = @url_str
     else "invalid"
+    end
+  end
     
   
   
