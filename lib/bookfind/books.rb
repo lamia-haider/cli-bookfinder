@@ -18,11 +18,12 @@ class Bookfind::Books
     checkurl
     urlin
     #ubase = book.css("i a")#[0]["href"]
-    if urlin != "invalid" && book.at('tr:contains("Publication")')
+    if urlin != "invalid" 
       url = @url
-      self.new(title, author, url)
+      if url.include? "wiki"
+        self.new(title, author, url)
     end
-   binding.pry
+ # binding.pry
   end
   
   
