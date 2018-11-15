@@ -4,6 +4,7 @@ require 'net/http'
 
 class Bookfind::Books
   attr_accessor :title, :author, :date, :url, :summary
+  
   @@all = []
   
   
@@ -14,34 +15,36 @@ class Bookfind::Books
     titleau = book.text.split("by")
     title = titleau[0].strip
     author = titleau[1]
-    @url_str = "https://en.wikipedia.org/wiki/#{title.gsub(" ", "_")}"
-    checkurl
-    urlin
-    #ubase = book.css("i a")#[0]["href"]
-    if urlin != "invalid" 
-      url = @url
-      if url.include? "wiki"
-        self.new(title, author, url)
-    end
- # binding.pry
+    url = "https://en.wikipedia.org/#{book.css('i a').attr("href").text}"
+    self.new(title, author, url)
+    #@url_str = "https://en.wikipedia.org/wiki/#{title.gsub(" ", "_")}"
+    # checkurl
+    # urlin
+    # if urlin != "invalid" 
+    #   url = @url
+    #   binding.pry
+    # end
+    getbook
+    # if @page.at_css('div.mw-parser-output')
+    #   url = @url
   end
+
+
   
   
-  def self.checkurl
-    url = URI.parse(@url_str) rescue false
-    url.kind_of?(URI::HTTP) || url.kind_of?(URI::HTTPS)
-  end
+  # def self.checkurl
+  #   url = URI.parse(@url_str) rescue false
+  #   url.kind_of?(URI::HTTP) || url.kind_of?(URI::HTTPS)
+  # end
   
-  def self.urlin
-    if checkurl == true
-      @url = @url_str
-    else "invalid"
-    end
-  end
-    
+  # def self.urlin
+  #   if checkurl == true
+  #     @url = @url_str
+  #     else "invalid"
+  #   end
+  # end
   
-  
-  def initialize(title=nil, author=nil, url=nil)
+  def initialize(title, author, url)
     @title = title
     @url = url
     @author = author
@@ -52,13 +55,24 @@ class Bookfind::Books
     @@all
   end
   
+  def newall
+    @all.keep_if {|a| 
+    getbook
+    if @page.at_css('div.mw-parser-output')
   
-  def getbook
-    @page = Nokogiri::HTML(open(url))
+  
+  def self.getbook
+    # response = open(@url) rescue nil
+    # next unless response
+    # @page = Nokogiri::HTML(response)
+    @page = Nokogiri::HTML(open(@url))
+    
+    # if @page.at_css(div.mw-parser-output)
+    #   @page
+    # end
   end
   
   def date
-    getbook
     fdate = @page.css('table.infobox tr td').detect{ |e| e.text =~ /\d{4}/ }
     @date = fdate.text
     @date
@@ -79,8 +93,8 @@ class Bookfind::Books
 
   
   def summary
-    getbook
+    
     @summary ||= @page.css("div.mw-parser-output p").text
   end
+  
 end
-
