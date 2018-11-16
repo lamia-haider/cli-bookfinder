@@ -8,9 +8,6 @@ class Bookfind::Books
   @@all = []
   
   
-  
-  # To-do: Exclude any books without the table.infobox.
-  
   def self.getpage(book)
     titleau = book.text.split("by")
     title = titleau[0].strip
@@ -73,9 +70,10 @@ class Bookfind::Books
   
   def date
     getbook
-    fdate = @page.css('table.infobox tr td').detect{ |e| e.text =~ /\d{4}/ }
-    @date = fdate.text
-    @date
+    if fdate = @page.css('table.infobox tr td').detect{ |e| e.text =~ /\d{4}/ }
+      @date = fdate.text
+    else @date ="Unavailable"
+    end
     # odate = @page.css("tr td")[5]
     # pdate = @page.css("tr td")[6]
     # qdate = @page.css("tr td")[7]
