@@ -15,16 +15,16 @@ class Bookfind::Books
     titleau = book.text.split("by")
     title = titleau[0].strip
     author = titleau[1]
-    url = "https://en.wikipedia.org/#{book.css('i a').attr("href").text}"
+    url = "https://en.wikipedia.org/wiki/#{title.gsub(" ", "_")}"
+    #rl = "https://en.wikipedia.org/#{book.css('i a').attr("href").text}"
     self.new(title, author, url)
-    #@url_str = "https://en.wikipedia.org/wiki/#{title.gsub(" ", "_")}"
     # checkurl
     # urlin
     # if urlin != "invalid" 
     #   url = @url
     #   binding.pry
     # end
-    getbook
+
     # if @page.at_css('div.mw-parser-output')
     #   url = @url
   end
@@ -54,14 +54,11 @@ class Bookfind::Books
   def self.all
     @@all
   end
-  
-  def newall
-    @all.keep_if {|a| 
-    getbook
-    if @page.at_css('div.mw-parser-output')
+
+    
   
   
-  def self.getbook
+  def getbook
     # response = open(@url) rescue nil
     # next unless response
     # @page = Nokogiri::HTML(response)
@@ -73,6 +70,7 @@ class Bookfind::Books
   end
   
   def date
+    getbook
     fdate = @page.css('table.infobox tr td').detect{ |e| e.text =~ /\d{4}/ }
     @date = fdate.text
     @date
@@ -93,7 +91,7 @@ class Bookfind::Books
 
   
   def summary
-    
+    getbook
     @summary ||= @page.css("div.mw-parser-output p").text
   end
   
