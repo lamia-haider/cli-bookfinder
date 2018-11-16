@@ -16,13 +16,15 @@ class Bookfind::Books
     title = titleau[0].strip
     author = titleau[1]
     url = "https://en.wikipedia.org/wiki/#{title.gsub(" ", "_")}"
+    @url_str = url
     #rl = "https://en.wikipedia.org/#{book.css('i a').attr("href").text}"
-    self.new(title, author, url)
-    # checkurl
-    # urlin
-    # if urlin != "invalid" 
+    checkurl
+    urlin
+    if urlin != "invalid" 
+      self.new(title, author, url)
+    end
     #   url = @url
-    #   binding.pry
+  #binding.pry
     # end
 
     # if @page.at_css('div.mw-parser-output')
@@ -32,17 +34,17 @@ class Bookfind::Books
 
   
   
-  # def self.checkurl
-  #   url = URI.parse(@url_str) rescue false
-  #   url.kind_of?(URI::HTTP) || url.kind_of?(URI::HTTPS)
-  # end
+  def self.checkurl
+     url = URI.parse(@url_str) rescue false
+     url.kind_of?(URI::HTTP) || url.kind_of?(URI::HTTPS)
+   end
   
-  # def self.urlin
-  #   if checkurl == true
-  #     @url = @url_str
-  #     else "invalid"
-  #   end
-  # end
+  def self.urlin
+     if checkurl == true
+       @url = @url_str
+       else "invalid"
+     end
+   end
   
   def initialize(title, author, url)
     @title = title
