@@ -55,7 +55,7 @@ class Bookfind::CLI
   
   def checkfordiv
     @page = Nokogiri::HTML(open(@bookcl.url))
-    if @page.at_css("div.mw-parser-output") != nil
+    if @page.at_css.include?("div.mw-parser-output")
       true
     end
   end
