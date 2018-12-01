@@ -12,23 +12,20 @@ class Bookfind::Books
     titleau = book.text.split("by")
     title = titleau[0].strip
     author = titleau[1]
-    url = "https://en.wikipedia.org/wiki/#{title.gsub(" ", "_")}"
+    if title.scan(/\w+/).size == 1
+      url = "https://en.wikipedia.org/wiki/#{title.gsub(" ", "_")}_(novel)"
+    else
+      url = "https://en.wikipedia.org/wiki/#{title.gsub(" ", "_")}"
+    end
+    #url = "https://en.wikipedia.org/#{book.css('i a').attr("href").text}"
     @url_str = url
-    #rl = "https://en.wikipedia.org/#{book.css('i a').attr("href").text}"
     checkurl
     urlin
-    if urlin != "invalid" 
+    if urlin != "invalid"
       self.new(title, author, url)
+
+
     end
-    #   url = @url
-  #binding.pry
-    # end
-
-    # if @page.at_css('div.mw-parser-output')
-    #   url = @url
-  end
-
-
   
   
   def self.checkurl
