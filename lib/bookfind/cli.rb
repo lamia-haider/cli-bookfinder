@@ -1,11 +1,11 @@
 class Bookfind::CLI
-  
+
   def intro
     puts "Hello human. I am the Scientific Anecdotes and Stories Suggester or SASS.".yellow
     puts "Are you here to expand your small mamallian brain with fictional accounts of space, time travel and other such complex concepts?".yellow
     puts "Please just state 'yes' or 'no', we don't want you to strain yourself.".yellow
   end
-  
+
 
   def call
     intro
@@ -14,16 +14,19 @@ class Bookfind::CLI
     input = gets.strip
     if input == "yes"
       start
-      elsif input == "no" 
+      elsif input == "no"
       puts "I see. Please come back when you are feeling more literate! Good-bye!".yellow
       exit
       else puts "Sorry, you seem to have momentarily forgotten how to type. Please try again".yellow
         call
     end
   end
-  
+
   def start
     @bookcl = Bookfind::Books.all.sample
+        binding.pry
+    @bookurl = @bookcl.url
+
     if checkfordiv != true
       start
     else
@@ -52,11 +55,10 @@ class Bookfind::CLI
       end
     end
   end
-  
+
   def checkfordiv
-    @page = Nokogiri::HTML(open(@bookcl.url))
+    @page = Nokogiri::HTML(open(@bookurl))
     if @page.at_css.include?("div.mw-parser-output")
       true
     end
   end
-
