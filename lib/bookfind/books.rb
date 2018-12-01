@@ -16,8 +16,8 @@ class Bookfind::Books
     # if title.scan(/\w+/).size == 1
     #   url = "https://en.wikipedia.org/wiki/#{title.gsub(" ", "_")}_(novel)"
     # else
-    #url = "https://en.wikipedia.org/wiki/#{title.gsub(" ", "_")}"
-    url = "https://en.wikipedia.org/#{obj.css('i a').attr("href").text}"
+    url = "https://en.wikipedia.org/wiki/#{title.gsub(" ", "_")}"
+#    url = "https://en.wikipedia.org/#{obj.css('i a').attr("href").text}"
     @url_str = url
     checkurl
     urlin

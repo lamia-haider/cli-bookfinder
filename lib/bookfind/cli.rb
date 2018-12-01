@@ -24,7 +24,7 @@ class Bookfind::CLI
 
   def start
     @bookcl = Bookfind::Books.all.sample
-        binding.pry
+      #binding.pry
     @bookurl = @bookcl.url
 
     if checkfordiv != true

@@ -12,7 +12,7 @@ class Bookfind::Scraper
     booklist.css(".mw-parser-output ul li").each do |book|
       if book.text.include?("by")
         @@all<< book
-    binding.pry
+  #  binding.pry
       end
       objectify
     end
