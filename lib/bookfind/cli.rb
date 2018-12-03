@@ -4,11 +4,11 @@ class Bookfind::CLI
     puts "Hello human. I am the Scientific Anecdotes and Stories Suggester or SASS.".yellow
     puts "Are you here to expand your small mamallian brain with fictional accounts of space, time travel and other such complex concepts?".yellow
     puts "Please just state 'yes' or 'no', we don't want you to strain yourself.".yellow
+    call
   end
 
 
   def call
-    intro
     Bookfind::Scraper.getinfo
     puts "Would you like a random book recommendation?".yellow
     input = gets.strip
@@ -25,12 +25,17 @@ class Bookfind::CLI
 
   def start
     @bookcl = Bookfind::Books.all.sample
-
     @bookurl = @bookcl.url
-    @page = Nokogiri::HTML(open(@bookurl))
-    if @page.css.include?("div.mw-parser-output")
-      bookcl = @bookcl
-      suggestion(bookcl)
+    if @bookurl = "Unavailable"
+      start
+    else
+      page = Nokogiri::HTML(open(@bookurl))
+      if page.at_css("div.mw-parser-output")
+        bookcl = @bookcl
+        suggestion(bookcl)
+      else start
+
+      end
     end
   end
 
