@@ -16,14 +16,14 @@ class Bookfind::Books
     # if title.scan(/\w+/).size == 1
     #   url = "https://en.wikipedia.org/wiki/#{title.gsub(" ", "_")}_(novel)"
     # else
-    url = "https://en.wikipedia.org/wiki/#{title.gsub(" ", "_")}"
-#    url = "https://en.wikipedia.org/#{obj.css('i a').attr("href").text}"
-    @url_str = url
-    checkurl
-    urlin
-    if urlin != "invalid"
-      self.new(title, author, url)
+  #  url = "https://en.wikipedia.org/wiki/#{title.gsub(" ", "_")}"
+  #binding.pry
+    if !obj.css('a').empty?
+      url = "https://en.wikipedia.org/#{obj.css('a').attribute('href').value}"
+    else url = "Unavailable"
     end
+    self.new(title, author, url)
+
   end
 
   def self.checkurl
