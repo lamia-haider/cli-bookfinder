@@ -33,11 +33,14 @@ class Bookfind::CLI
       if page.at_css("div.mw-parser-output")
         bookcl = @bookcl
         suggestion(bookcl)
-      else start
-
       end
     end
+  rescue OpenURI::HTTPError => e
+    if e.message == '404 Not Found'
+      start
+    end
   end
+
 
   def suggestion(bookcl)
     bookcl = @bookcl
