@@ -43,7 +43,7 @@ class Bookfind::CLI
     bookcl = @bookcl
     puts "Why not try".yellow
     puts "'#{bookcl.title}'"
-    puts "Interested? If you want more information type 'yes'. If you want a different recommendation type 'no'."
+    puts "Interested? If you want more information type 'yes'. If you want a different recommendation type 'no'.".yellow
     puts "Type 'exit' if you have decided that reading is too hard.".yellow
     input = gets.strip
     if input == "no"
