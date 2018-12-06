@@ -5,11 +5,11 @@ require "bookfind/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "scifibookfind"
-  spec.version       = Bookfind::VERSION
+  spec.version       = Scifibookfind::VERSION
   spec.authors       = ["'Lamia Haider'"]
   spec.email         = ["'lamia.haider@gmail.com'"]
-  spec.executables = ["bookfind"]
-  spec.files       = ["lib/bookfind.rb", "lib/bookfind/cli.rb", "lib/bookfind/scraper.rb", "lib/bookfind/books.rb"]
+  spec.executables = ["bookfinder"]
+  spec.files       = ["lib/scifibookfind.rb", "lib/bookfind/cli.rb", "lib/bookfind/scraper.rb", "lib/bookfind/books.rb"]
   spec.description   = "Randomly selects a science fiction novel title and provides further details."
   spec.license       = "MIT"
   spec.summary = "The Scientific Anecdotes and Stories Suggestion Interface"

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    bookfind (0.1.0)
+    scifibookfind (0.1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -38,7 +38,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bookfind!
+  scifibookfind!
   bundler (~> 1.16)
   nokogiri
   pry

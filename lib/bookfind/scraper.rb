@@ -3,7 +3,7 @@ require "pry"
 require "open-uri"
 require "rake"
 
-class Bookfind::Scraper
+class Scifibookfind::Scraper
   attr_accessor :title, :author, :date, :url, :summary
   @@all = []
 
@@ -11,7 +11,7 @@ class Bookfind::Scraper
     booklist = Nokogiri::HTML(open("https://en.wikipedia.org/wiki/List_of_science_fiction_novels"))
     booklist.css(".mw-parser-output ul li").each do |obj|
       if obj.text.include?("by")
-        Bookfind::Books.getpage(obj)
+        Scifibookfind::Books.getpage(obj)
       end
       @@all<< obj
     end
