@@ -2,7 +2,7 @@ require 'net/http'
 
 
 
-class Bookfind::Books
+class Scifibookfind::Books
   attr_accessor :title, :author, :date, :url, :summary
 
   @@all = []

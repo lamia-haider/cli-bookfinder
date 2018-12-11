@@ -1,4 +1,4 @@
-class Bookfind::CLI
+class Scifibookfind::CLI
 
   def intro
     puts "Hello human. I am the Scientific Anecdotes and Stories Suggester Interface or SASSI.".yellow
@@ -9,7 +9,7 @@ class Bookfind::CLI
 
 
   def call
-    Bookfind::Scraper.getinfo
+    Scifibookfind::Scraper.getinfo
     puts "Would you like a random book recommendation?".yellow
     input = gets.strip
     if input == "yes"
@@ -24,7 +24,7 @@ class Bookfind::CLI
   end
 
   def start
-    @bookcl = Bookfind::Books.all.sample
+    @bookcl = Scifibookfind::Books.all.sample
     @bookurl = @bookcl.url
     if @bookurl == "Unavailable"
       start
