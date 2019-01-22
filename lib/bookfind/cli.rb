@@ -25,16 +25,10 @@ class Scifibookfind::CLI
 
   def start
     bookchosen = Scifibookfind::Books.all.sample
-    if bookchosen.url == "Unavailable"
-      start
+    Scifibookfind::Scraper.getbook(bookchosen)
+    if bookchosen.summary
+      suggestion(bookchosen)
     else
-      @page = Scifibookfind::Scraper.getbook(bookchosen.url)
-      if @page.at_css("div.mw-parser-output")
-        suggestion(bookchosen)
-      end
-    end
-  rescue OpenURI::HTTPError => e
-    if e.message == '404 Not Found'
       start
     end
   end
@@ -51,9 +45,9 @@ class Scifibookfind::CLI
       puts " "
       puts "Author: #{bookchosen.author}"
       puts" "
-      puts "Date Published: #{(@page.css('table.infobox tr td').detect{ |e| e.text =~ /\d{4}/}).text}"
+      puts "Date Published: #{bookchosen.date}"
       puts " "
-      puts "Synopsis: #{@page.css("div.mw-parser-output p").text[0..1500]}..."
+      puts "Synopsis: #{bookchosen.summary}..."
       puts " "
       puts " "
       puts " "
