@@ -17,8 +17,10 @@ class Scifibookfind::Scraper
     end
   end
 
-  def self.all
-    @@all
+  def self.getbook(url)
+    page = Nokogiri::HTML(open(url))
   end
+
+
 
 end

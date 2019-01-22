@@ -24,15 +24,14 @@ class Scifibookfind::CLI
   end
 
   def start
-    @bookcl = Scifibookfind::Books.all.sample
-    @bookurl = @bookcl.url
-    if @bookurl == "Unavailable"
+    @bookchosen = Scifibookfind::Books.all.sample
+    url = @bookchosen.url
+    if url == "Unavailable"
       start
     else
-      page = Nokogiri::HTML(open(@bookurl))
+      page = Scifibookfind::Scraper.getbook(url)
       if page.at_css("div.mw-parser-output")
-        bookcl = @bookcl
-        suggestion(bookcl)
+        suggestion(@bookchosen)
       end
     end
   rescue OpenURI::HTTPError => e
@@ -42,10 +41,9 @@ class Scifibookfind::CLI
   end
 
 
-  def suggestion(bookcl)
-    bookcl = @bookcl
+  def suggestion(bookchosen)
     puts "Why not try".yellow
-    puts "'#{bookcl.title}'"
+    puts "'#{bookchosen.title}'"
     puts "Interested? If you want more information type 'yes'. If you want a different recommendation type 'no'.".yellow
     puts "Type 'exit' if you have decided that reading is too hard.".yellow
     input = gets.strip
@@ -53,14 +51,14 @@ class Scifibookfind::CLI
       start
     elsif input == "yes"
       puts " "
-      puts "Author: #{bookcl.author}"
+      puts "Author: #{bookchosen.author}"
       puts" "
-      puts "Date Published: #{bookcl.date}"
+      puts "Date Published: #{bookchosen.date}"
       puts " "
-      puts "Synopsis: #{bookcl.summary[0..900]}..."
+      puts "Synopsis: #{bookchosen.summary[0..1500]}..."
       puts " "
       puts "Please visit the provided URL if you'd like to read further."
-      puts "Website for more Information: #{bookcl.url}"
+      puts "Website for more Information: #{bookchosen.url}"
       puts "★・・・・・・★・・・・・・★・・・・・・★"
       call
     else puts "Sorry, you seem to be communicating in typos. Please try again.".yellow

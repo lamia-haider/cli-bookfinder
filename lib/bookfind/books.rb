@@ -1,5 +1,5 @@
 require 'net/http'
-
+require 'pry'
 
 
 class Scifibookfind::Books
@@ -12,12 +12,6 @@ class Scifibookfind::Books
     titleau = obj.text.split("by")
     title = titleau[0].strip
     author = titleau[1]
-  #  binding.pry
-    # if title.scan(/\w+/).size == 1
-    #   url = "https://en.wikipedia.org/wiki/#{title.gsub(" ", "_")}_(novel)"
-    # else
-  #  url = "https://en.wikipedia.org/wiki/#{title.gsub(" ", "_")}"
-  #binding.pry
     if !obj.css('a').empty?
       url = "https://en.wikipedia.org/#{obj.css('a').attribute('href').value}"
     else url = "Unavailable"
@@ -26,17 +20,7 @@ class Scifibookfind::Books
 
   end
 
-  def self.checkurl
-     url = URI.parse(@url_str) rescue false
-     url.kind_of?(URI::HTTP) || url.kind_of?(URI::HTTPS)
-   end
 
-  def self.urlin
-     if checkurl == true
-       @url = @url_str
-       else "invalid"
-     end
-   end
 
   def initialize(title, author, url)
     @title = title
@@ -49,45 +33,24 @@ class Scifibookfind::Books
     @@all
   end
 
-
-
-
-  def getbook
-    # response = open(@url) rescue nil
-    # next unless response
-    # @page = Nokogiri::HTML(response)
-    @page = Nokogiri::HTML(open(@url))
-
-    # if @page.at_css(div.mw-parser-output)
-    #   @page
-    # end
+  def page
+    @page = Scifibookfind::Scraper.getbook(@url)
   end
 
   def date
-    getbook
     if fdate = @page.css('table.infobox tr td').detect{ |e| e.text =~ /\d{4}/ }
       @date = fdate.text
     else @date ="Unavailable"
     end
-    # odate = @page.css("tr td")[5]
-    # pdate = @page.css("tr td")[6]
-    # qdate = @page.css("tr td")[7]
-    # rdate = @page.css("tr td")[8]
-    # if odate =~ /[1850-2050]/
-    #   @date = odate.text
-    #   elsif pdate =~ /[1850-2050]/
-    #   @date = pdate.text
-    #   elsif qdate =~ /[1850-2050]/
-    #   @date = qdate.text
-    #   elsif rdate =~ /[1850-2050]/
-    #   @date = rdate.text
-    # # end
+    binding.pry
   end
 
 
   def summary
-    getbook
     @summary ||= @page.css("div.mw-parser-output p").text
   end
+
+
+
 
 end
