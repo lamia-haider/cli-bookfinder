@@ -24,14 +24,13 @@ class Scifibookfind::CLI
   end
 
   def start
-    @bookchosen = Scifibookfind::Books.all.sample
-    url = @bookchosen.url
-    if url == "Unavailable"
+    bookchosen = Scifibookfind::Books.all.sample
+    if bookchosen.url == "Unavailable"
       start
     else
-      page = Scifibookfind::Scraper.getbook(url)
-      if page.at_css("div.mw-parser-output")
-        suggestion(@bookchosen)
+      @page = Scifibookfind::Scraper.getbook(bookchosen.url)
+      if @page.at_css("div.mw-parser-output")
+        suggestion(bookchosen)
       end
     end
   rescue OpenURI::HTTPError => e
@@ -39,7 +38,6 @@ class Scifibookfind::CLI
       start
     end
   end
-
 
   def suggestion(bookchosen)
     puts "Why not try".yellow
@@ -53,9 +51,11 @@ class Scifibookfind::CLI
       puts " "
       puts "Author: #{bookchosen.author}"
       puts" "
-      puts "Date Published: #{bookchosen.date}"
+      puts "Date Published: #{(@page.css('table.infobox tr td').detect{ |e| e.text =~ /\d{4}/}).text}"
       puts " "
-      puts "Synopsis: #{bookchosen.summary[0..1500]}..."
+      puts "Synopsis: #{@page.css("div.mw-parser-output p").text[0..1500]}..."
+      puts " "
+      puts " "
       puts " "
       puts "Please visit the provided URL if you'd like to read further."
       puts "Website for more Information: #{bookchosen.url}"

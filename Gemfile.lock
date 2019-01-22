@@ -38,13 +38,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  scifibookfind!
   bundler (~> 1.16)
   nokogiri
   pry
   pry-nav
   rake (~> 10.0)
   rspec
+  scifibookfind!
 
 BUNDLED WITH
-   1.17.1
+   1.17.3

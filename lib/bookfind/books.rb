@@ -1,6 +1,3 @@
-require 'net/http'
-require 'pry'
-
 
 class Scifibookfind::Books
   attr_accessor :title, :author, :date, :url, :summary
@@ -38,18 +35,17 @@ class Scifibookfind::Books
   end
 
   def date
-    if fdate = @page.css('table.infobox tr td').detect{ |e| e.text =~ /\d{4}/ }
-      @date = fdate.text
-    else @date ="Unavailable"
+    fdate = @page.css('table.infobox tr td').detect{ |e| e.text =~ /\d{4}/ }
+    if fdate == nil
+      @date ="Unavailable"
+    else @date = fdate
     end
-    binding.pry
   end
 
 
   def summary
     @summary ||= @page.css("div.mw-parser-output p").text
   end
-
 
 
 

@@ -5,7 +5,7 @@ require "rake"
 
 class Scifibookfind::Scraper
   attr_accessor :title, :author, :date, :url, :summary
-  @@all = []
+
 
   def self.getinfo
     booklist = Nokogiri::HTML(open("https://en.wikipedia.org/wiki/List_of_science_fiction_novels"))
@@ -13,12 +13,13 @@ class Scifibookfind::Scraper
       if obj.text.include?("by")
         Scifibookfind::Books.getpage(obj)
       end
-      @@all<< obj
     end
   end
 
+
   def self.getbook(url)
     page = Nokogiri::HTML(open(url))
+    page
   end
 
 
